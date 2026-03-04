@@ -1,0 +1,36 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Log in to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build Docker image
+        run: |
+          IMAGE_TAG=${{ github.sha }}
+          docker build -t springboot-ecr-demo:$IMAGE_TAG .
+          docker tag springboot-ecr-demo:$IMAGE_TAG 121943526728.dkr.ecr.us-east-1.amazonaws.com/springboot-ecr-demo:$IMAGE_TAG
+
+      - name: Push to ECR
+        run: |
+          IMAGE_TAG=${{ github.sha }}
+          docker push 121943526728.dkr.ecr.us-east-1.amazonaws.com/springboot-ecr-demo:$IMAGE_TAG
