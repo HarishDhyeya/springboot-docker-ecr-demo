@@ -1,13 +1,13 @@
-package com.example.controller;
+package com.example.springbootdemo.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
+public class HiController {
 
-    @GetMapping("/hello")
+    @GetMapping("/hi")
     public String hello() {
-        return "Hello from Docker Spring Boot!";
+        return "Hello and Hi from Docker Spring Boot!";
     }
 }
