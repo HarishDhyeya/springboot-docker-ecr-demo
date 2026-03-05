@@ -28,9 +28,10 @@ jobs:
         run: |
           IMAGE_TAG=${{ github.sha }}
           docker build -t springboot-ecr-demo:$IMAGE_TAG .
-          docker tag springboot-ecr-demo:$IMAGE_TAG 121943526728.dkr.ecr.us-east-1.amazonaws.com/springboot-ecr-demo:$IMAGE_TAG
+          docker tag springboot-ecr-demo:$IMAGE_TAG 121943526728.dkr.ecr.us-east-2.amazonaws.com/springboot-ecr-demo:$IMAGE_TAG
+          
 
       - name: Push to ECR
         run: |
           IMAGE_TAG=${{ github.sha }}
-          docker push 121943526728.dkr.ecr.us-east-1.amazonaws.com/springboot-ecr-demo:$IMAGE_TAG
+          docker push 121943526728.dkr.ecr.us-east-2.amazonaws.com/springboot-ecr-demo:$IMAGE_TAG
